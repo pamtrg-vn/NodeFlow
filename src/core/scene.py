@@ -15,24 +15,16 @@ class Scene(QtWidgets.QGraphicsScene):
         super(Scene, self).__init__(parent)
 
         self._properties = properties
+        self._mode = DisplayMode(self._properties["display"]["mode"])
 
         self.setBackgroundBrush(QtGui.QBrush(QtGui.QColor(*self._properties["background"])))
         
     
-        self._mode = DisplayMode(self._properties["display"]["mode"])
-
-
-
-
     def set_mode(self, mode: DisplayMode):
-        if mode not in DisplayMode:
-            raise ValueError("Invalid mode")
-        print("Setting mode to", mode)
         if self._mode != mode:
             self._mode = mode
             self.update()
             
-
     def drawBackground(self, painter: QtGui.QPainter, rect: QtCore.QRectF):
         painter.fillRect(rect, self.backgroundBrush())
         if self._mode == DisplayMode.GRID:
