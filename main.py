@@ -25,9 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.button.clicked.connect(self.change_mode)
 
         self.combo = QtWidgets.QComboBox()
-        self.combo.addItem("Grid")
-        self.combo.addItem("Dots")
-        self.combo.addItem("Dashed")
+        self.combo.addItems([mode.name for mode in DisplayMode])
         self.combo.currentIndexChanged.connect(self.change_mode)
 
         self.layout.addWidget(self.button)
@@ -44,13 +42,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def change_mode(self):
         mode = self.combo.currentText()
-        if mode == "Grid":
-            self.scene.mode = DisplayMode.GRID
-        elif mode == "Dots":
-            self.scene.mode = DisplayMode.DOTS
-        elif mode == "Dashed":
-            self.scene.mode = DisplayMode.DASHED
-    
+        self.scene.set_mode(DisplayMode[mode])
 
     
 if __name__ == "__main__":
